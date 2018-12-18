@@ -1,3 +1,5 @@
+
+
 class FavoritesController < ApplicationController
   before_action :set_favorite, only: [:show, :edit, :update, :destroy]
 
@@ -16,10 +18,17 @@ class FavoritesController < ApplicationController
     name = params.require(:name)
     @movie = Favorite.find_by title: name
     respond_to do |format|
-
       format.html # show.html.erb
       format.json { render json: @movie }
+     end    
+  end
+
+  def key
+    @api_key = Figaro.env.omdbapi
     
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @api_key }
      end    
   end
 
