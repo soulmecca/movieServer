@@ -12,6 +12,17 @@ class FavoritesController < ApplicationController
   def show
   end
 
+  def find
+    name = params.require(:name)
+    @movie = Favorite.find_by title: name
+    respond_to do |format|
+
+      format.html # show.html.erb
+      format.json { render json: @movie }
+    
+     end    
+  end
+
   # GET /favorites/new
   def new
     @favorite = Favorite.new
@@ -23,7 +34,9 @@ class FavoritesController < ApplicationController
 
   # POST /favorites
   # POST /favorites.json
+  skip_before_action :verify_authenticity_token 
   def create
+
     @favorite = Favorite.new(favorite_params)
 
     respond_to do |format|
